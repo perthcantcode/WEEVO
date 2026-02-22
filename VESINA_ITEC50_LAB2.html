@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en"> <!--English Bp-->
+<head>
+<meta charset="UTF-8"> <!--for sepcial char's such as emoji etc-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><!--Responsive for mobile phones -->
+
+<title>WebEvolution</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap" rel="stylesheet">
+<style> /* css applied sa every part ng wp */
+* {
+    box-sizing: border-box; /* padding stays INSIDE the element size */
+    margin: 0;              
+    padding: 0;              
+}
+
+/* CSS Variables = reusable color names
+    Change these to retheme the entire site! */
+:root {
+    --dark:    #040404; /* main background color */
+    --card:    #111118; /* card background color */
+    --line:    #1e1e2e; /* border / divider color */
+    --purple:  #09e058; /* accent color (buttons, dots) */
+    --gold:    #09e058; /* highlight color */
+    --gray:    #f0f0f5; /* muted / secondary text */
+    --white:   #f0f0f5; /* bright text */
+}
+
+/* ── BODY = the whole page ── */
+body {
+    background: var(--dark);     /* dark background */
+    color: var(--gray);          /* default text color */
+    font-family: 'Space Grotesk', monospace; /* monospace = code-like font */
+    font-size: 14px;
+    line-height: 1.7;            /* space between lines */
+    overflow-x: hidden;          /* no horizontal scroll */
+}
+
+/* ── HERO SECTION = the big first screen ── */
+.hero {
+    min-height: 100vh;           /* 100vh = full screen height */
+    display: flex;               /* flexbox = easy centering */
+    flex-direction: column;      /* stack children top to bottom */
+    justify-content: center;     /* center vertically */
+    align-items: center;         /* center horizontally */
+    text-align: center;
+    padding: 2rem;
+    border-bottom: 1px solid var(--line);
+}
+
+/* Small label above the big title */
+.hero-label {
+    font-size: 11px;
+    letter-spacing: 0.3em;       /* wide spaced letters */
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1rem;
+    /* Animation: fade + slide up on page load */
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+    /* fadeUp = animation name | 0.8s = duration | 0.2s = delay | forwards = stay at end */
+}
+
+/* Big hero title */
+.hero h1 {
+    font-family: 'Space Grotesk', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    /* clamp(min, preferred, max) = responsive font size */
+    color: #ffffff;                              /* green color */
+    text-shadow: 0 0 20px #c2bebe,              /* close tight glow */
+                 0 0 60px rgba(74,222,128,0.5); /* wide soft glow */
+    line-height: 0.9;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards; /* 0.4s delay = starts after label */
+}
+
+/* The italic gold word inside h1 */
+.hero h1 em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold);
+}
+
+/* Subtitle under the title */
+.hero p {
+    max-width: 460px;
+    margin-top: 1.5rem;
+    font-size: 12px;
+    color: var(--gray);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+}
+
+/* ── WRAPPER = limits content width and centers it ── */
+.wrap {
+    max-width: 1100px;
+    margin: 0 auto;   /* auto left+right = horizontally centered */
+    padding: 5rem 2rem;
+}
+
+/* ── STATS ROW = 4 number boxes ── */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* repeat(4, 1fr) = 4 equal columns */
+    gap: 1px;                    /* tiny gap = looks like dividers */
+    background: var(--line);     /* gap color = border color */
+    border: 1px solid var(--line);
+    margin-bottom: 5rem;
+}
+
+.stat {
+    background: var(--card);
+    padding: 2rem;
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: 'Space Grotesk', serif;
+    font-size: 2.2rem;
+    color: #09e058;                              /* green color */
+    text-shadow: 0 0 20px #c2bebe,              /* close tight glow */
+                 0 0 60px rgba(74,222,128,0.5); /* wide soft glow */
+}
+
+.stat-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+}
+
+/* ── TIMELINE WRAPPER ── */
+.timeline {
+    position: relative; /* needed so the center line can be positioned inside */
+}
+
+/* The vertical center line */
+.timeline::before {
+    content: '';          /* pseudo-element needs content (even if empty) */
+    position: absolute;
+    left: 50%;            /* put it at the horizontal center */
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+    transform: translateX(-50%); /* shift left by half its own width = perfectly centered */
+}
+
+/* ── ONE ERA ROW ── */
+.era {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    /* 3 columns: [card side] [center dot] [empty or card side] */
+    margin-bottom: 1.5rem;
+    /* Scroll animation start state */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* When JS adds the "show" class, the era becomes visible */
+.era.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── CENTER SPINE (dot + year) ── */
+.spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;          /* makes it a circle */
+    background: var(--purple);
+    border: 2px solid var(--dark);
+    box-shadow: 0 0 0 1px var(--purple), 0 0 16px rgba(124,111,205,0.4);
+    z-index: 1;                  /* sits on top of the line */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Dot grows when you hover over the era */
+.era:hover .dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 2px var(--gold), 0 0 24px rgba(232,213,163,0.5);
+}
+
+.year {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-top: 0.4rem;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* ── CARD ── */
+.card {
+    /* Glassmorphism = semi-transparent + blur + light border */
+    background: rgba(9, 224, 88, 0.25);   /* very faint white = glass tint */
+    backdrop-filter: blur(16px);              /* blurs whatever is BEHIND the card */
+    -webkit-backdrop-filter: blur(12px);      /* same but for Safari browser */
+    border: 1px solid rgba(255, 255, 255, 0.08); /* faint white border = glass edge */
+    padding: 1.5rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    box-shadow: 3px 3px 5px rgba(228, 212, 212, 0.8);
+
+}
+
+/* Card glows when you hover the era */
+.era:hover .card {
+  background: rgba(255, 255, 255, 0.1);         /* slightly more visible on hover */
+  border-color: rgba(74, 222, 128, 0.3);         /* green glass edge on hover */
+  box-shadow: 0 8px 32px rgba(74, 222, 128, 0.1), /* outer glow */
+              inset 0 1px 0 rgba(255,255,255,0.1); /* top inner shine */
+}
+
+/* "WEB 1.0" tag above the title */
+.tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 0.4rem;
+    text-align: justify;    
+}
+
+.card h3 {
+    font-family: 'Space Grotesk', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+    text-align: justify; 
+}
+
+.card p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+    text-align: justify;        /* stretches each line to fill the full width */
+    hyphens: auto;              /* breaks long words with a hyphen if needed */
+}
+
+/* Highlight words inside a paragraph */
+.card p strong { color: var(--white); }
+
+/* Bullet point facts list */
+.facts {
+    list-style: none;
+    margin: 0.6rem 0 0.8rem;
+}
+
+.facts li {
+    font-size: 11px;
+    color: var(--gray);
+    padding: 0.15rem 0;
+    text-align: justify;  
+}
+
+/* Small arrow before each fact */
+.facts li::before {
+    content: '▸ ';
+    color: var(--purple);
+}
+
+/* Right-side cards: flip the fact arrows */
+.left .facts li::before { content: '◂ '; }
+
+/* Technology pills/tags */
+.pills,
+.card-features {
+    display: flex;
+    flex-wrap: wrap;   /* wrap to next line if too many */
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    justify-content: center;
+}
+
+.pill {
+    flex: 1 1 auto;        /* grow and shrink freely */
+    text-align: center;    /* center the text inside each pill */
+    min-width: 80px;       /* don't let pills get too tiny */
+    max-width: 160px;      /* don't let pills get too wide */
+    font-size: 10px;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--line);
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    transition: border-color 0.3s, color 0.3s;
+    justify-content: center;
+}
+
+.era:hover .pill {
+    border-color: var(--purple);
+    color: var(--white);
+}
+
+/* ── PREVIEW BUTTON ── */
+.preview-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    padding: 0.4rem 0.85rem;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    color: var(--purple);
+    background: transparent;
+    border: 1px solid var(--purple);
+    cursor: pointer;             /* shows hand cursor on hover */
+    transition: background 0.25s, color 0.25s;
+}
+
+.preview-btn:hover {
+    background: var(--purple);
+    color: #fff;
+}
+
+/* Arrow rotates when open */
+.arrow { transition: transform 0.3s; display: inline-block; }
+.preview-btn.open .arrow { transform: rotate(180deg); }
+
+/* ── PREVIEW PANEL (expandable) ── */
+.preview {
+    max-height: 0;               /* hidden by default */
+    overflow: hidden;
+    transition: max-height 0.5s ease; /* smooth open/close */
+}
+
+.preview.open { max-height: 500px; } /* tall enough to show content */
+
+.preview-body {
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+}
+
+/* Tab buttons inside the preview */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+}
+
+.tab {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 0.35rem 0.85rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--gray);
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+/* Tab content panels */
+.pane { display: none; }         /* hidden by default */
+.pane.active { display: block; } /* shown when active */
+
+/* Code block */
+.code {
+    background: #050508;
+    border: 1px solid var(--line);
+    font-size: 11px;
+    padding: 0.9rem;
+    color: #36e370;              /* green text */
+    white-space: pre;            /* preserves spaces and line breaks */
+    overflow-x: auto;            /* scroll if code is wide */
+    line-height: 1.6;
+    min-height: 90px;
+    text-align: justify;
+    justify-content: center;
+    align-items: center;
+    sybau
+}
+
+/* Syntax highlight colors */
+.kw  { color: #a23de6; }  /* keywords: if, function, const */
+.str { color: #53a5f2; }  /* strings: "text" */
+.fn  { color: #82aaff; }  /* function names */
+.cm  { color: #546e7a; font-style: italic; } /* comments */
+.nm  { color: #ffaf10; }  /* numbers */
+
+/* Stats grid inside preview */
+.mini-stats {
+    background: #050508;
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.8rem;
+    gap: 0.6rem;
+}
+
+.mini-stat .label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
+.mini-stat .val   { font-size: 1.1rem; color: var(--white); font-family: 'Playfair Display', serif; }
+
+/* ── LEFT/RIGHT CARD ALIGNMENT ── */
+
+/* Left card: card in column 1, spine in column 2, empty in column 3 */
+.era.left .card-col  { grid-column: 1; padding: 2rem 2rem 2rem 0; text-align: right; }
+.era.left .spine     { grid-column: 2; }
+.era.left .empty-col { grid-column: 3; }
+.era.left .pills     { justify-content: flex-end; }
+.era.left .facts li::before { content: '◂ '; }
+
+/* Right card: empty in column 1, spine in column 2, card in column 3 */
+.era.right .empty-col { grid-column: 1; }
+.era.right .spine     { grid-column: 2; }
+.era.right .card-col  { grid-column: 3; padding: 2rem 0 2rem 2rem; text-align: left; }
+.era.right .pills     { justify-content: flex-start; }
+
+/* ── CLOSING SECTION ── */
+.next {
+    margin-top: 5rem;
+    padding: 3.5rem 2rem;
+    text-align: center;
+    border: 1px solid var(--line);
+    background: var(--card);
+}
+
+.next p.label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    color: #ffffff;                             
+    text-shadow: 0 0 20px #c2bebe,              
+                0 0 60px rgba(74,222,128,0.5);
+}
+
+.next h2 {
+    font-family: 'Space Grotesk', serif;
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    color: #09e058;                              
+    text-shadow: 0 0 20px #c2bebe,              
+                0 0 60px rgba(74,222,128,0.5); 
+}
+
+.next h2 em { font-style: italic; color: var(--gold); }
+.next p.body { font-size: 12px; color: var(--gray); max-width: 500px; margin: 0 auto; }
+
+/* ── FOOTER ── */
+footer {
+    border-top: 1px solid var(--line);
+    padding: 2.5rem;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+}
+
+/* ── KEYFRAME ANIMATIONS ── */
+/* fadeUp = start invisible + 20px below, end visible at normal position */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MOBILE / RESPONSIVE ── */
+/* If screen is 700px wide or less, switch to single-column layout */
+@media (max-width: 700px) {
+    .timeline::before { left: 20px; } /* move line to the left */
+
+    /* Stack spine + card side by side (spine left, card right) */
+    .era,
+    .era.left,
+    .era.right {
+    grid-template-columns: 40px 1fr !important;
+    /* !important overrides previous rules */
+    }
+
+    /* Force spine always to column 1, card to column 2 */
+    .era .spine     { grid-column: 1 !important; grid-row: 1; padding-top: 1.75rem; }
+    .era .card-col  { grid-column: 2 !important; grid-row: 1; padding: 1.5rem 0 1.5rem 1rem !important; text-align: left !important; }
+    .era .empty-col { display: none !important; } /* hide empty column */
+
+    /* Fix pill and fact alignment on mobile */
+    .era.left .pills     { justify-content: flex-start; }
+    .era.left .facts li::before { content: '▸ '; }
+
+    .stats { grid-template-columns: 1fr 1fr; } /* 2 columns on mobile */
+    .mini-stats { grid-template-columns: 1fr; }
+}
+
+/* Make the Live tab look special — gold color */
+.tab:last-child {
+    color: var(--gold, #e8d5a3);
+    margin-left: auto;   /* pushes it to the far right */
+}
+
+.tab:last-child:hover {
+    color: #fff;
+    border-bottom-color: var(--gold, #e8d5a3);
+}
+
+/* AI NOTICE*/
+/* AI notice bar inside preview panel */
+.ai-notice {
+    font-size: 10px;
+    color: var(--muted, #c6c6e1);
+    padding: 0.4rem 0.6rem;
+    margin-bottom: 0.5rem;
+    border-left: 2px solid var(--purple, #7c6fcd);
+    background: rgba(124, 111, 205, 0.05);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+}
+
+.ai-notice strong {
+    color: var(--purple, #7c6fcd);
+}
+
+/* Small glowing badge */
+.ai-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: #fff;
+    background: var(--purple, #7c6fcd);
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+}
+
+
+/* ── MARQUEE BAR ── */
+.marquee-wrap {
+    overflow: hidden;            /* hide text that goes outside the bar */
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 0.6rem 0;
+    webkit-backdrop-filter: blur(8px);
+}
+
+/* Second marquee bar — slightly different tint */
+.marquee-wrap.credits {
+    background: rgba(74, 222, 128, 0.04); /* faint green tint for credits bar */
+    border-color: rgba(74, 222, 128, 0.1);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;          /* as wide as all the text combined */
+    animation: scrollLeft 30s linear infinite; /* slide left forever */
+}
+
+.marquee-track.reverse {
+    animation: scrollRight 30s linear infinite;
+}
+
+/* Pause scrolling when mouse hovers over it */
+.marquee-wrap:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+.marquee-item {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    white-space: nowrap;         /* never wrap to next line */
+    padding: 0 1.5rem;           /* space between items */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* The dot separator between items */
+.marquee-item::after {
+    content: '·';
+    margin-left: 1.5rem;
+    color: var(--purple);
+}
+
+/* Highlighted items (tech names) glow green */
+.marquee-item.highlight {
+    color: #4ade80;
+    text-shadow: 0 0 8px rgba(74,222,128,0.5);
+}
+
+/* Credits bar items are gold */
+.marquee-wrap.credits .marquee-item {
+    color: var(--gold, #e8d5a3);
+}
+
+/* The marquee slide animation */
+@keyframes scrollLeft {
+    from { transform: translateX(0); }       /* start at original position */
+    to   { transform: translateX(-50%); }    /* slide left by half (the duplicate half) */
+}
+
+@keyframes scrollRight {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+</style>
+<div class="marquee-wrap">
+    <div class="marquee-track">
+    <span class="marquee-item highlight">HTML5</span>
+    <span class="marquee-item highlight">CSS3</span>
+    <span class="marquee-item highlight">JavaScript</span>
+    <span class="marquee-item highlight">Intersection Observer API</span>
+    <span class="marquee-item highlight">DOM Manipulation</span>
+    <span class="marquee-item highlight">Responsive Design</span>
+    <span class="marquee-item highlight">Google Fonts</span>
+
+    <span class="marquee-item highlight">HTML5</span>
+    <span class="marquee-item highlight">CSS3</span>
+    <span class="marquee-item highlight">JavaScript</span>
+    <span class="marquee-item highlight">Intersection Observer API</span>
+    <span class="marquee-item highlight">DOM Manipulation</span>
+    <span class="marquee-item highlight">Responsive Design</span>
+    <span class="marquee-item highlight">Google Fonts</span>
+    </div>
+</div>
+<div class="marquee-wrap">
+    <div class="marquee-track reverse">
+    <span class="marquee-item highlight">HTML5</span>
+    <span class="marquee-item highlight">CSS3</span>
+    <span class="marquee-item highlight">JavaScript</span>
+    <span class="marquee-item highlight">Intersection Observer API</span>
+    <span class="marquee-item highlight">DOM Manipulation</span>
+    <span class="marquee-item highlight">Responsive Design</span>
+    <span class="marquee-item highlight">Google Fonts</span>
+
+    <span class="marquee-item highlight">HTML5</span>
+    <span class="marquee-item highlight">CSS3</span>
+    <span class="marquee-item highlight">JavaScript</span>
+    <span class="marquee-item highlight">Intersection Observer API</span>
+    <span class="marquee-item highlight">DOM Manipulation</span>
+    <span class="marquee-item highlight">Responsive Design</span>
+    <span class="marquee-item highlight">Google Fonts</span>
+    </div>
+</div>
+</head>
+<body>
+<!-- ═══════════ HERO SECTION ═══════════ -->
+<section class="hero">
+<p class="hero-label">How the Internet Grew Up</p><br>
+<h1><em>WEE</em>Vo</h1><br>
+<br><br><h1>The <em>Web</em> Evolution<br>Through Time</h1><br><br>
+<p><em>From a single text page at CERN in 1991 to AI that builds its own interfaces the story of how the internet changed everything.</em></p>
+</section>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="wrap">
+
+<!-- STATS ROW -->
+<div class="stats" id="stats">
+    <div class="stat">
+    <span class="stat-number" data-target="35">0</span>
+    <span class="stat-label">Years of the Web</span>
+    </div>
+    <div class="stat">
+    <span class="stat-number" data-target="5.5" data-suffix="B">0</span>
+    <span class="stat-label">Internet Users</span>
+    </div>
+    <div class="stat">
+    <span class="stat-number" data-target="200" data-suffix="M+">0</span>
+    <span class="stat-label">Active Websites</span>
+    </div>
+    <div class="stat">
+    <span class="stat-number" data-target="1.98" data-suffix="B">0</span>
+    <span class="stat-label">Total Websites ever built</span>
+    </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline">
+
+    <!-- ── ERA 1 · LEFT SIDE ── -->
+    <div class="era left">
+
+    <div class="card-col">
+        <div class="card">
+        <div class="tag">Web 1.0 · Read-Only Era</div>
+        <h3>It Began With a Single Page</h3>
+        <p>On August 6, 1991, <strong style="color: #09e058;">Tim Berners-Lee</strong> published the world's first website at CERN. It was plain text — no images, no color, no interaction. Just words and links.</p>
+        <p>This was a <strong style="color: #09e058;">read-only</strong> web. You could look, but not touch. Pages were updated manually and rarely. Accessing a page over dial-up could take several minutes.</p>
+        <ul class="facts" ><h3>FACTS</h3>
+            <li>First website: info.cern.ch — still online today</li>
+            <li>Netscape Navigator (1994) brought the web to everyday people</li>
+            <li>Amazon and eBay both launched in 1995 as simple static storefront</li>
+            <li>Dial-up speeds averaged 28–56 kbps — a 3-minute MP3 took over an hour</li>
+        </ul>
+        <div class="pills">
+            <span class="pill">HTML 1.0</span>
+            <span class="pill">Static Pages & Files</span>
+            <span class="pill">Hyperlinks</span>
+            <span class="pill">Netscape</span>
+            <span class="pill">Dial-up</span>
+            <span class="pill">FTP</span>
+        </div>
+        <!-- Button calls the togglePreview() JS function below -->
+        <button class="preview-btn" onclick="togglePreview(this)">
+            <span class="arrow">▾</span> Preview Era
+        </button>
+        <div class="preview">
+            <div class="preview-body">
+                <div class="ai-notice">
+                <span class="ai-badge">✦ AI</span>
+                LIVE PREVIEWS po are generated with assistance from
+                <strong>AI</strong> since kapos na sa time and i just want to add this function.
+            </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(this,'c1')">Code</button>
+                <button class="tab" onclick="switchTab(this,'s1')">Stats</button>
+                <button class="tab" onclick="openLivePreview('era1')">Live ↗</button>
+            </div>
+            <div id="c1" class="pane active">
+                <div class="code"><span class="cm">&lt;!-- Early 1990s HTML --&gt;</span>
+<span class="kw">&lt;html&gt;</span>
+<span class="kw">&lt;head&gt;</span>
+<span class="kw">&lt;title&gt;</span><span class="str">Worl Wide Web</span><span class="kw">&lt;/title&gt;</span>
+<span class="kw">&lt;/head&gt;</span>
+<span class="kw">&lt;body&gt;</span>
+<span class="kw">&lt;h1&gt;</span><span class="str">Welcome to my Homepage!</span><span class="kw">&lt;/h1&gt;</span>
+<span class="kw">&lt;p&gt;</span><span class="str">Under construction </span><span class="kw">&lt;/p&gt;</span>
+<span class="kw">&lt;a href=</span><span class="str">"about.html"</span><span class="kw">&gt;</span>About Me<span class="kw">&lt;/a&gt;</span>
+<span class="cm">&lt;!-- No CSS. No JS. Just pure HTML. --&gt;</span>
+<span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></div>
+            </div>
+            <div id="s1" class="pane">
+                <div class="mini-stats">
+                <div class="mini-stat"><div class="label">Websites in 1991</div><div class="val">1</div></div>
+                <div class="mini-stat"><div class="label">Daily Internet Users (1995)</div><div class="val">16 M</div></div>
+                <div class="mini-stat"><div class="label">Websites by 1999</div><div class="val">3 M</div></div>
+                <div class="mini-stat"><div class="label">Avg Page Size</div><div class="val">2 KB</div></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="spine">
+        <div class="dot"></div>
+        <span class="year">1991–1999</span>
+    </div>
+
+    <div class="empty-col"></div>
+    </div>
+    <!-- /ERA 1 -->
+
+    <!-- ── ERA 2 · RIGHT SIDE ── -->
+    <div class="era right">
+
+    <div class="empty-col"></div>
+
+    <div class="spine">
+        <div class="dot"></div>
+        <span class="year">1999–2004</span>
+    </div>
+
+    <div class="card-col">
+        <div class="card">
+        <div class="tag">The Bubble Era · Dot-Com Era</div>
+        <h3>Marquees, Flash & the Dot-Com Crash</h3>
+        <p>Money flooded the internet. Any company with ".com" in its name got investment. This created an era of <strong style="color: #09e058;">neon backgrounds, blinking text, animated GIFs</strong> , and hit counters.</p>
+        <p><strong style="color: #09e058;">Macromedia Flash</strong> let designers build animated, interactive experiences — but they took forever to load and couldn't be read by search engines. The bubble burst in 2000.</p>
+        <ul class="facts"><h3>FACTS</h3>
+            <li>NASDAQ lost 78% of its value between 2000–2002</li>
+            <li>GeoCities hosted 38 million user-made pages at its peak</li>
+            <li>Flash was installed on 98% of all desktop computers by 2002</li>
+            <li>Google quietly launched in 1998 — and survived the crash</li>
+        </ul>
+        <div class="pills">
+            <span class="pill">Macromedia Flash</span>
+            <span class="pill">GIF Animations</span>
+            <span class="pill">GeoCities</span>
+            <span class="pill">Table Layouts</span>
+            <span class="pill">MIDI Audio</span>
+            <span class="pill">Frames</span>
+        </div>
+        <button class="preview-btn" onclick="togglePreview(this)">
+            <span class="arrow">▾</span> Preview Era
+        </button>
+        <div class="preview">
+            <div class="preview-body">
+                <div class="ai-notice">
+                <span class="ai-badge">✦ AI</span>
+                LIVE PREVIEWS po are generated with assistance from
+                <strong>AI</strong> since kapos na sa time and i just want to add this function.
+            </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(this,'c2')">Code</button>
+                <button class="tab" onclick="switchTab(this,'s2')">Stats</button>
+                <button class="tab" onclick="openLivePreview('era2')">Live ↗</button>
+            </div>
+            <div id="c2" class="pane active">
+                <div class="code"><span class="cm">★★ WELCOME TO MY GOOFY ASS HOMEPAGE ★★</span>
+                    
+<span class="kw">&lt;body</span><span class="fn">bgcolor=</span><span class="str">"#000080"</span> <span class="fn">text=</span><span class="str">"#FFFF00"</span>
+<span class="fn">background=</span><span class="str">"stars.gif"</span><br>
+<span class="kw">&lt;center></span>
+        <span class="kw">&lt;marquee </span><span class="fn">scrollamount=</span><span class="str">"5"></span>
+            <span class="str">🌟 HOT SITE — CLICK HERE !!! 🌟</span>
+        <span class="kw">&lt;marquee></span>
+        <span class="kw">&lt;blink></span><span class="str">*** UNDER KONSTRAKSYUN ***</span>
+        <span class="kw">&lt;img </span><span class="fn">src=</span><span class="str">"dancing_baby.gif"</span><span class="fn">width=</span><span class="str">"100"</span>
+<span class="kw">&lt;/center></span><br>
+<span class="kw">&lt;hr</span><span class="fn"> color=</span><span class="str">"red" </span><span class="fn">size=</span><span class="str">"5"></span>
+<span class="kw">&lt;marquee&gt;</span><span class="str">🌟 HOT SITE — CLICK HERE!!! 🌟</span><span class="kw">&lt;/marquee&gt;</span>
+<span class="kw">&lt;blink&gt;</span><span class="str">UNDER CONSTRUCTION</span><span class="kw">&lt;/blink&gt;</span><span class="kw">&lt;blink&gt;</span>
+You are visitor number: <span class="kw">&lt;img </span><span class="fn">src=</span><span class="nm">"counter.cgi?id=12345"</span>
+Best viewed in: Internet Explorer 5</div>
+            </div>
+
+            <div id="s2" class="pane">
+                <div class="mini-stats">
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">NASDAQ Peak</div><div class="val">5,048 pts</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">NASDAQ Low</div><div class="val">1,114 pts</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">GeoCities Pages</div><div class="val">38 Million</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">Dot-com companies that failed</div><div class="val">900+</div></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- /ERA 2 -->
+
+    <!-- ── ERA 3 · LEFT SIDE ── -->
+    <div class="era left">
+
+    <div class="card-col">
+        <div class="card">
+        <div class="tag">Web 2.0  · The Participation Era</div>
+        <h3>The Social Web</h3>
+        <p>The web stopped being something you <em  style="color: #09e058;">read</em> and became something you <em  style="color: #09e058;">participated in</em>. <strong  style="color: #09e058;">AJAX</strong> (2005) let pages update content without full reloads — suddenly Gmail, Google Maps, and Facebook felt alive.</p>
+        <p><strong  style="color: #09e058;">YouTube, Twitter, WordPress</strong> — these platforms let ordinary people publish to the world. The term "User Generated Content" was born. <strong  style="color: #09e058;">jQuery</strong> made JavaScript easy for everyone.</p>
+        <ul class="facts"><h3>FACTS</h3>
+            <li>Facebook grew from 1M (2004) to 1 billion users (2012)</li>
+            <li>YouTube's first video was "Me at the Zoo" uploaded April 23, 2005</li>
+            <li>Gmail launched with 1 GB of free storage — 500x more than competitors</li>
+            <li>iPhone launched in 2007 — mobile web began here</li>
+            <li>jQuery was used by 74-77% of all websites as of 2004</li>
+        </ul>
+        <div class="pills">
+            <span class="pill">AJAX</span>
+            <span class="pill">jQuery</span>
+            <span class="pill">CSS2&3</span>
+            <span class="pill">XML</span>
+            <span class="pill">RSS</span>
+            <span class="pill">JSON</span>
+            <span class="pill">WordPress</span>
+            <span class="pill">Youtube</span>
+            <span class="pill">Social Media</span>
+        </div>
+        <button class="preview-btn" onclick="togglePreview(this)">
+            <span class="arrow">▾</span> Preview Era
+        </button>
+        <div class="preview">
+            <div class="preview-body">
+            <div class="ai-notice">
+                <span class="ai-badge">✦ AI</span>
+                LIVE PREVIEWS po are generated with assistance from
+                <strong>AI</strong> since kapos na sa time and i just want to add this function.
+            </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(this,'c3')">Code</button>
+                <button class="tab" onclick="switchTab(this,'s3')">Stats</button>
+                <button class="tab" onclick="openLivePreview('era3')">Live ↗</button>
+            </div>
+            <div id="c3" class="pane active">
+            <div class="code">
+<span class="cm">// AJAX — update page WITHOUT reloading it</span>
+<span class="cm">// jQuery made this kind of code possible for everyone</span>
+<span class="cm">// Before this, it took 30+ lines of raw JavaScript</span>
+<span class="fn">$</span>.<span class="fn">ajax</span>({
+        <span class="fn">$</span>(document).<span class="fn">ready</span>(function() {
+
+            <span class="fn">$</span>('#load-more').<span class="fn">click</span>function(data) {
+                <span class="fn">$</span>.<span class="fn">get</span><span class="str">('/api/posts?page=2'</span>, function(data) {
+                    <span class="fn">$</span>('#feed').<span class="fn">append</span>(data);
+                    <span class="cm">// Just those new posts get added.</span>
+                    <span class="cm">// The rest of the page stays put.</span>
+                    });
+                });
+
+                <span class="cm">// SMOOT ANIMETSHOONS became 1 linerz</span>
+                <span class="fn">$</span>('.menu').<span class="fn">.slideToggle</span>(300);
+            });</div>
+        </div>
+            <div id="s3" class="pane">
+                <div class="mini-stats">
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">Facebook Users 2012</div><div class="val">1 Billion</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">YouTube Views/Day</div><div class="val">4 Billion</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">jQuery Usage</div><div class="val">77%</div></div>
+                <div class="mini-stat"><div class="label"  style="color: #09e058;">WordPress-powered sites today</div><div class="val">43%</div></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="spine">
+        <div class="dot"></div>
+        <span class="year">2004–2012</span>
+    </div>
+
+    <div class="empty-col"></div>
+    </div>
+    <!-- /ERA 3 -->
+
+    <!-- ── ERA 4 · RIGHT SIDE ── -->
+    <div class="era right">
+
+    <div class="empty-col"></div>
+
+    <div class="spine">
+        <div class="dot"></div>
+        <span class="year">2012–2020</span>
+    </div>
+
+    <div class="card-col">
+        <div class="card">
+        <div class="tag">Mobile-First Era · SPAs & Frameworks</div>
+        <h3>The App-ification of Everything</h3>
+        <p>In 2012, mobile traffic surpassed desktop for the first time. <strong style="color: #09e058;"">Responsive Design</strong> became mandatory — one site that adapts to any screen using CSS media queries.</p>
+        <p>Frameworks like <strong style="color: #09e058;">React</strong> (Facebook, 2013), <strong style="color: #09e058; >Vue</strong>, and <strong style="color: #09e058;"">Angular</strong> turned websites into full applications running in the browser. <strong>Node.js</strong> let JavaScript run on servers too.</p>
+        <ul class="facts"><h3>FACTS</h3>
+            <li>React is now downloaded over 20 million times per week on npm and used by ~40% of all JavaScript applications</li>
+            <li>Google's Mobile-First Indexing became the default in 2021</li>
+            <li>Node.js enabled full-stack JavaScript development for the first time</li>
+            <li>Airbnb, Instagram, and Netflix all run on React</li>
+        </ul>
+        <div class="pills">
+            <span class="pill">React</span>
+            <span class="pill">Vue</span>
+            <span class="pill">Angular</span>
+            <span class="pill">Node.js</span>
+            <span class="pill">REST API's</span>
+            <span class="pill">JSON</span>
+            <span class="pill">PWA</span>
+            <span class="pill">npm</span>
+            <span class="pill">Webpack</span>
+        </div>
+        <button class="preview-btn" onclick="togglePreview(this)">
+            <span class="arrow">▾</span> Preview Era
+        </button>
+        <div class="preview">
+            <div class="preview-body">
+                <div class="ai-notice">
+                <span class="ai-badge">✦ AI</span>
+                LIVE PREVIEWS po are generated with assistance from
+                <strong>AI</strong> since kapos na sa time and i just want to add this function.
+            </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(this,'c4')">Code</button>
+                <button class="tab" onclick="switchTab(this,'s4')">Stats</button>
+                <button class="tab" onclick="openLivePreview('era4')">Live ↗</button>
+            </div>
+            <div id="c4" class="pane active">
+                <div class="code"><span class="cm">// React — a UI is just a function of its data</span>
+<span class="cm">// When data changes, the UI updates automatically</span>
+<span class="kw">import</span> { useState, useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">function</span><span class="fn">PostFeed</span>() {
+<span class="kw">const</span> [posts, setPosts] = <span class="fn">useState</span>(<span class="nm">[]</span>);
+<span class="kw">const</span> [loading, setLoading] = <span class="fn">useState</span>(<span class="nm">true</span>);
+
+
+<span class="kw">useEffect(()</span> =&gt; {
+    <span class="cm">// // Fetch posts when the component loads</span>
+<span class="kw">fetch</span> ('/api/posts')
+    <span class="kw">.then</span>(res => res.json())
+    <span class="kw">.then</span>(<span class="nm">data</span> => {
+        setPosts(<span class="nm">data</span>);
+        setLoading(<span class="nm">false</span>);
+    });
+}, []); <span class="cm">// [] = run once on mount</span>
+    <span class="fn">if </span>(loading)<span class="fn"> return </span><span class="kw">&lt;p&gt;</span><span class="str">Loading...</span><span class="kw">&lt;/p&gt;</span>
+    <span class="fn">return </span>posts<span class="kw">.map</span>(<span class="nm">p</span> => <<span class="fn">PostCard</span><span class="kw"> key=</span>{<span class="nm">p.id</span>}<span class="kw"> post=</span>{<span class="nm">p</span>} />);
+}
+</div>
+        </div>
+            <div id="s4" class="pane">
+                <div class="mini-stats">
+                <div class="mini-stat"><div class="label" style="color: #09e058;">Mobile Web Share</div><div class="val">55%</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">React Downloads/Week</div><div class="val">20M+</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">Node.js Developers</div><div class="val">6.3M</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">PWAs in Production</div><div class="val">1M+</div></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    </div>
+    <!-- /ERA 4 -->
+
+    <!-- ── ERA 5 · LEFT SIDE ── -->
+    <div class="era left">
+
+    <div class="card-col">
+        <div class="card">
+        <div class="tag">Web 3.0 & AI · The Intelligent Web</div>
+        <h3>Now the Web Thinks for Itself</h3>
+        <p><strong style="color: #09e058;">Generative AI</strong> entered the browser. Websites can now write text, generate images, answer questions, and even build their own interfaces — all in real time based on what you ask.</p>
+        <p><strong style="color: #09e058;">WebAssembly</strong> let complex desktop software run in the browser tab. <strong style="color: #09e058;">Edge Computing</strong> moved servers closer to users. The line between "website" and "AI assistant" is dissolving.</p>
+        <ul class="facts"><h3>FACTS</h3>
+            <li>ChatGPT hit 100 million users in just 2 months - faster than any product ever</li>
+            <li>GitHub Copilot writes an estimated 46% of code in projects that use it</li>
+            <li>Figma runs entirely in the browser using WebAssembly — no install needed</li>
+            <li>The global AI market is projected to reach $1.8 trillion by 2030</li>
+        </ul>
+        <div class="pills">
+            <span class="pill">AI Agents</span>
+            <span class="pill">ChatGPT</span>
+            <span class="pill">WebAssembly</span>
+            <span class="pill">Edge Computing</span>
+            <span class="pill">Web 3</span>
+            <span class="pill">AI Agents</span>
+            <span class="pill">Rust</span>
+            <span class="pill">Vector DBs</span>
+        </div>
+        <button class="preview-btn" onclick="togglePreview(this)">
+            <span class="arrow">▾</span> Preview Era
+        </button>
+        <div class="preview">
+            <div class="preview-body">
+                <div class="ai-notice">
+                <span class="ai-badge">✦ AI</span>
+                LIVE PREVIEWS po are generated with assistance from
+                <strong>AI</strong> since kapos na sa time and i just want to add this function.
+            </div>
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab(this,'c5')">Code</button>
+                <button class="tab" onclick="switchTab(this,'s5')">Stats</button>
+                <button class="tab" onclick="openLivePreview('era5')">Live ↗</button>
+            </div>
+            <div id="c5" class="pane active">
+                <div class="code"><span class="cm">// The modern web: AI answers your questions in real time</span>
+<span class="cm">// This streams a response token by token — like ChatGPT does</span>
+<span class="kw">import </span> Anthropic <span class="kw">from</span> <span class="str">'@anthropic-ai/sdk'</span>;
+
+<span class="kw">const </span> client = <span class="kw">new </span><span class="fn"> Anthropic </span>();
+
+<span class="kw">async function</span><span class="fn">askAI</span>()(<span class="nm">userQuestion</span>) {
+<span class="cm">// stream: true sends tokens as they're generated</span>
+<span class="kw">const</span><span class="fn">stream </span>= client.<span class="kw">messages</span><span class="nm">.stream</span>({
+    model: <span class="str">'claude-sonnet-4-6'</span>,
+    max_tokens: <span class="str">1024</span>,
+    messages: [
+            { role: <span class="str">'user'</span>, content: <span class="str">userQuestion</span> }
+        ]
+    });
+
+    <span class="cm">// Print each token as it arrives</span>
+    <span class="nm">stream.on</span>('text', (<span class="nm">token</span>) => {
+        <span class="kw">process</span><span class="fn">.stdout</span>.write(<span class="nm">token</span>);
+    }):
+}
+
+<span class="fn">askAI</span>('Explain how the internet works.');
+<span class="cm">// AI generates the page. On demand. Live.</span></div>
+            </div>
+            <div id="s5" class="pane">
+                <div class="mini-stats">
+                <div class="mini-stat"><div class="label" style="color: #09e058;">ChatGPT Users</div><div class="val">180M+</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">GitHub Copilot Developers</div><div class="val">1.8M</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">Code Written by AI (Copilot)</div><div class="val">~46%</div></div>
+                <div class="mini-stat"><div class="label" style="color: #09e058;">Global AI Market 2025</div><div class="val">$184B</div></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="spine">
+        <div class="dot"></div>
+        <span class="year">2020–Today</span>
+    </div>
+
+    <div class="empty-col"></div>
+    </div>
+    <!-- /ERA 5 -->
+
+</div>
+<!-- /timeline -->
+
+<!-- CLOSING SECTION -->
+<div class="next">
+    <p class="label">Where Do We Go From Here?</p>
+    <h2>The <em> Post-Browser </em> Web</h2>
+    <p class="body">  Spatial computing, always-on AI companions, brain-computer interfaces, and augmented reality layers draped over the physical world — the next version of the web might not
+    run in a browser at all. It might run in your glasses, your earbuds, or eventually your nervous system. active question is no longer what the web can do.
+    It is what we will choose to do with it.</p>
+</div>
+
+</div>
+<!-- /wrap -->
+
+<footer>
+<p>HOW THE WEB GREW UP &nbsp;·&nbsp; 1991 – 2026 &nbsp;·&nbsp; ITEC50 LABORATORY 2 </p><br>
+</footer>
+
+<div class="marquee-wrap credits">
+    <div class="marquee-track">
+    <span class="marquee-item">Made by Ruperth Vesina</span>
+    <span class="marquee-item">ITEC50 · LAB II </span>
+    <span class="marquee-item">Inspired by Roj Portfolio</span>
+    <span class="marquee-item">Design Inspo · Linear.app</span>
+    <span class="marquee-item">© 2026 All Rights Reserved</span>
+
+    <span class="marquee-item">Made by Ruperth Vesina</span>
+    <span class="marquee-item">ITEC50 · LAB II </span>
+    <span class="marquee-item">Inspired by Roj Portfolio</span>
+    <span class="marquee-item">Design Inspo · Linear.app</span>
+    <span class="marquee-item">© 2026 All Rights Reserved</span>
+    </div>
+</div>
+<div class="marquee-wrap credits">
+    <div class="marquee-track reverse">
+    <span class="marquee-item">Made by Ruperth Vesina</span>
+    <span class="marquee-item">ITEC50 · LAB II </span>
+    <span class="marquee-item">Inspired by Roj Portfolio</span>
+    <span class="marquee-item">Design Inspo · Linear.app</span>
+    <span class="marquee-item">© 2026 All Rights Reserved</span>
+
+    <span class="marquee-item">Made by Ruperth Vesina</span>
+    <span class="marquee-item">ITEC50 · LAB II </span>
+    <span class="marquee-item">Inspired by Roj Portfolio</span>
+    <span class="marquee-item">Design Inspo · Linear.app</span>
+    <span class="marquee-item">© 2026 All Rights Reserved</span>
+    </div>
+</div>
+
+<script>
+// ============================================
+// JAVASCRIPT STARTS HERE
+// JS = the behavior / logic of the page
+// ============================================
+
+
+// ── FEATURE 1: Scroll Fade-in Animation ──
+// IntersectionObserver watches elements and fires when they enter the screen
+
+const observer = new IntersectionObserver(function(entries) {
+    // "entries" = list of all watched elements that changed visibility
+    entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+        // isIntersecting = true when the element is visible on screen
+        entry.target.classList.add('show');
+        // Adding "show" class triggers the CSS transition (opacity + slide up)
+        observer.unobserve(entry.target);
+        // Stop watching this element — animation only plays once
+    }
+    });
+}, { threshold: 0.1 });
+// threshold: 0.1 = trigger when 10% of the element is visible
+
+// Tell the observer to watch every .era element
+document.querySelectorAll('.era').forEach(function(el) {
+    observer.observe(el);
+});
+
+
+// ── FEATURE 2: Animated Number Counter ──
+// Watches the stats section, then counts up numbers when visible
+
+const statsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+        runCounters();              // start the counting animation
+        statsObserver.unobserve(entry.target); // only run once
+    }
+    });
+}, { threshold: 0.4 });
+
+statsObserver.observe(document.getElementById('stats'));
+// getElementById('stats') = finds the element with id="stats"
+
+function runCounters() {
+    // Find all elements that have a data-target attribute
+    document.querySelectorAll('[data-target]').forEach(function(el) {
+
+    var target  = parseFloat(el.dataset.target);  // the final number
+    var suffix  = el.dataset.suffix || '';         // e.g. "B" or "M+"
+    var isFloat = (target % 1 !== 0);              // does it have decimals?
+    var current = 0;
+    var step    = target / 60;                     // how much to add each tick
+
+    // setInterval runs a function repeatedly every X milliseconds
+    var timer = setInterval(function() {
+        current = Math.min(current + step, target);  // add step, don't exceed target
+        // Update the visible text
+        el.textContent = isFloat
+        ? current.toFixed(1) + suffix   // e.g. "5.5B"
+        : Math.floor(current) + suffix; // e.g. "35"
+
+        if (current >= target) {
+        clearInterval(timer); // stop the timer when we reach the target
+        }
+    }, 25); // run every 25ms = ~40 times per second = smooth animation
+    });
+}
+
+
+// ── FEATURE 3: Toggle Preview Panel Open/Closed ──
+// Called by onclick="togglePreview(this)" on each button
+
+function togglePreview(btn) {
+    // btn = the button that was clicked (passed in by "this")
+
+    var panel  = btn.nextElementSibling;
+    // nextElementSibling = the very next HTML element after the button
+    // In our HTML, that's always the <div class="preview">
+
+    var isOpen = panel.classList.toggle('open');
+    // classList.toggle('open') adds "open" if missing, removes if present
+    // Returns true if "open" was ADDED, false if REMOVED
+
+    btn.classList.toggle('open', isOpen);
+    // Sync the button's open class (rotates the arrow via CSS)
+
+    // Change the arrow character to match open/closed state
+    btn.querySelector('.arrow').textContent = isOpen ? '▴' : '▾';
+    // '▴' = pointing up (open), '▾' = pointing down (closed)
+}
+
+
+// ── FEATURE 4: Switch Tabs (Code / Stats) ──
+// Called by onclick="switchTab(this, 'c1')" etc.
+
+function switchTab(btn, paneId) {
+    // btn    = the tab button that was clicked
+    // paneId = the id of the content panel to show (e.g. 'c1', 's1')
+
+    var inner = btn.closest('.preview-body');
+    // closest() travels UP the HTML tree to find the nearest .preview-body parent
+    // This ensures we only affect tabs inside THIS card, not all cards
+
+    // Deactivate all tabs in this preview
+    inner.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.remove('active');
+    });
+
+    // Deactivate all panes in this preview
+    inner.querySelectorAll('.pane').forEach(function(p) {
+    p.classList.remove('active');
+    });
+
+    // Activate only the clicked tab
+    btn.classList.add('active');
+
+    // Activate only the target pane
+    document.getElementById(paneId).classList.add('active');
+}
+
+// ── FEATURE 5: Live Preview ──
+// Stores the HTML for each era's live preview
+var livePreviews = {
+
+// ERA 1 — Static Web (1991 style)
+era1: `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to my Homepage!</title>
+</head>
+<body bgcolor="#ffffff" text="#000000">
+    <h1>World Wide Web</h1>
+    <hr>
+    <p>Welcome to my homepage!</p>
+    <p>This page is <b>under construction</b> </p>
+    <hr>
+    <a href="#">About Me</a> |
+    <a href="#">My Links</a> |
+    <a href="#">Email Me</a>
+    <hr>
+    <p><small>Best viewed in Netscape Navigator 2.0</small></p>
+    <p><small>You are visitor number: 000421</small></p>
+</body>
+</html>
+`,
+
+// ERA 2 — Dot-com Bubble (1999 style)
+era2: `
+<!DOCTYPE html>
+<html>
+<head>
+<title>★ MY AWESOME SITE ★</title>
+<style>
+    /* Spinning star GIF simulation */
+    @keyframes spin {
+    from { transform: rotate(0deg) scale(1); }
+    to   { transform: rotate(360deg) scale(1.2); }
+    }
+    @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+    }
+    @keyframes rainbow {
+    0%   { color: #FF0000; }
+    16%  { color: #FF8800; }
+    33%  { color: #FFFF00; }
+    50%  { color: #00FF00; }
+    66%  { color: #0088FF; }
+    83%  { color: #8800FF; }
+    100% { color: #FF0000; }
+    }
+    @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+    }
+
+    body {
+    background-color: #000080;
+    color: #FFFF00;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    }
+
+    /* Simulated spinning GIF — pure CSS */
+    .fake-gif {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg,
+        #FF0000, #FFFF00, #00FF00, #0000FF, #FF00FF);
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 1s linear infinite;
+    margin: 10px;
+    border: 3px solid #FFFF00;
+    box-shadow: 0 0 20px #FF0000;
+    }
+
+    /* Simulated dancing baby — bouncing emoji */
+    .dancing-baby {
+    font-size: 50px;
+    display: inline-block;
+    animation: bounce 0.4s ease infinite;
+    margin: 5px 15px;
+    }
+
+    /* Simulated spinning globe */
+    .globe {
+    font-size: 50px;
+    display: inline-block;
+    animation: spin 3s linear infinite;
+    margin: 5px 15px;
+    }
+
+    .blink-text {
+    animation: blink 0.8s step-start infinite;
+    color: #FF0000;
+    font-size: 22px;
+    font-weight: bold;
+    }
+
+    .rainbow-text {
+    animation: rainbow 1s linear infinite;
+    font-size: 18px;
+    font-weight: bold;
+    }
+
+    marquee {
+    color: #FF0000;
+    font-size: 18px;
+    font-weight: bold;
+    }
+
+    hr { border-color: red; border-width: 4px; }
+
+    .counter {
+    color: #FF0000;
+    font-size: 22px;
+    font-weight: bold;
+    }
+
+    .under-construction {
+    font-size: 24px;
+    animation: rainbow 1s linear infinite;
+    font-weight: bold;
+    padding: 10px;
+    border: 3px dashed #FF0000;
+    display: inline-block;
+    margin: 10px auto;
+    }
+</style>
+</head>
+<body>
+
+<marquee scrollamount="8">
+    🌟 WELCOME TO MY AWESOME HOMEPAGE — EST. 1999 🌟
+</marquee>
+
+<!-- Simulated animated GIFs using CSS -->
+<div>
+    <div class="fake-gif"></div>
+    <span class="dancing-baby">🕺</span>
+    <span class="globe">🌍</span>
+    <div class="fake-gif"></div>
+</div>
+
+<div class="under-construction">
+    ★★★ UNDER CONSTRUCTION ★★★
+</div>
+
+<br>
+
+<div class="blink-text">
+    *** CLICK HERE FOR FREE iPod!!! ***
+</div>
+
+<br>
+
+<marquee scrollamount="3" direction="right">
+    💥 HOT SITE — YOU WON'T BELIEVE WHAT'S INSIDE 💥
+</marquee>
+
+<hr>
+
+<p>You are visitor number:
+    <span class="counter">000420</span>
+</p>
+
+<p class="rainbow-text">
+    Sign my GuestBook!! Leave a comment!!
+</p>
+
+<br>
+
+<p style="color:#00FFFF;">
+    <a href="#" style="color:#FF00FF;">My Photos</a> |
+    <a href="#" style="color:#FF00FF;">My Friends</a> |
+    <a href="#" style="color:#FF00FF;">My Music</a> |
+    <a href="#" style="color:#FF00FF;">Sign Guestbook</a>
+</p>
+
+<hr>
+
+<p style="color:#CCCCCC; font-size:11px;">
+    Best viewed in Internet Explorer 5.0 at 800x600 resolution
+    <br>
+    © 1999 MyAwesomeSite.geocities.com — All Rights Reserved Maybe
+</p>
+
+</body>
+</html>
+`,
+
+// ERA 3 — Web 2.0 (2005 style)
+era3: `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyBlog 2.0</title>
+    <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: Arial, sans-serif;
+            background: #f0f0f0; color: #333; }
+    #header { background: #3b5998; color: white;
+                padding: 10px 20px; }
+    #header h1 { font-size: 22px; }
+    #nav { background: #2d4373; padding: 6px 20px; }
+    #nav a { color: #adc0e6; text-decoration: none;
+                margin-right: 15px; font-size: 13px; }
+    #main { display: flex; gap: 16px;
+            padding: 16px 20px; }
+    #feed { flex: 1; }
+    #sidebar { width: 200px; }
+    .post { background: white; border: 1px solid #ddd;
+            padding: 14px; margin-bottom: 12px;
+            border-radius: 4px; }
+    .post h2 { font-size: 15px; color: #3b5998;
+                margin-bottom: 6px; }
+    .post p { font-size: 13px; color: #555;
+                line-height: 1.5; }
+    .post-meta { font-size: 11px; color: #999;
+                    margin-top: 8px; }
+    .widget { background: white; border: 1px solid #ddd;
+                padding: 12px; margin-bottom: 12px;
+                border-radius: 4px; }
+    .widget h3 { font-size: 13px; color: #3b5998;
+                    margin-bottom: 8px; border-bottom: 1px solid #eee;
+                    padding-bottom: 4px; }
+    .widget ul { font-size: 12px; color: #555;
+                    padding-left: 16px; }
+    .widget li { margin-bottom: 4px; }
+    .tag { display: inline-block; background: #e0e0e0;
+            padding: 2px 8px; border-radius: 10px;
+            font-size: 11px; margin: 2px; color: #333; }
+    #footer { background: #ddd; text-align: center;
+                padding: 10px; font-size: 11px; color: #777; }
+    </style>
+</head>
+<body>
+    <div id="header">
+    <h1>📝 MyBlog — Web 2.0 Style</h1>
+    </div>
+    <div id="nav">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Archive</a>
+    <a href="#">RSS Feed</a>
+    </div>
+    <div id="main">
+    <div id="feed">
+        <div class="post">
+        <h2>AJAX is changing everything</h2>
+        <p>I just tried Gmail and the page updates
+            without refreshing. This is the future
+            of web development. jQuery makes it so easy!</p>
+        <div class="post-meta">
+            Posted by admin · 47 comments · ♥ 312 likes
+        </div>
+        </div>
+        <div class="post">
+        <h2>YouTube launched today!</h2>
+        <p>You can now upload and share videos
+            directly in the browser. The web will
+            never be the same after this.</p>
+        <div class="post-meta">
+            Posted by admin · 23 comments · ♥ 198 likes
+        </div>
+        </div>
+    </div>
+    <div id="sidebar">
+        <div class="widget">
+        <h3>Tags</h3>
+        <span class="tag">ajax</span>
+        <span class="tag">web2.0</span>
+        <span class="tag">jquery</span>
+        <span class="tag">rss</span>
+        <span class="tag">blog</span>
+        </div>
+        <div class="widget">
+        <h3>Blogroll</h3>
+        <ul>
+            <li>TechCrunch</li>
+            <li>Lifehacker</li>
+            <li>Digg</li>
+            <li>Slashdot</li>
+        </ul>
+        </div>
+    </div>
+    </div>
+    <div id="footer">
+    Powered by WordPress · RSS · ©2006 MyBlog
+    </div>
+</body>
+</html>
+`,
+
+// ERA 4 — Mobile / SPA era (2015 style)
+era4: `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AppUI — Modern Web App</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont,
+            'Segoe UI', sans-serif;
+            background: #f5f5f5; color: #333; }
+    nav { background: #fff; padding: 14px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex; align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    nav h1 { font-size: 18px; font-weight: 600;
+                color: #1a73e8; }
+    nav .btn { background: #1a73e8; color: white;
+                border: none; padding: 8px 18px;
+                border-radius: 20px; font-size: 13px;
+                cursor: pointer; }
+    .hero { background: linear-gradient(135deg,
+            #1a73e8, #0d47a1);
+            color: white; padding: 40px 20px;
+            text-align: center; }
+    .hero h2 { font-size: 26px; margin-bottom: 10px; }
+    .hero p { font-size: 14px; opacity: 0.85; }
+    .cards { display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px; padding: 20px; }
+    .card { background: white; border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .card h3 { font-size: 14px; font-weight: 600;
+                margin-bottom: 6px; color: #1a73e8; }
+    .card p { font-size: 12px; color: #666;
+                line-height: 1.5; }
+    .chip { display: inline-block;
+            background: #e8f0fe; color: #1a73e8;
+            font-size: 11px; padding: 3px 10px;
+            border-radius: 12px; margin-top: 8px; }
+    footer { text-align: center; padding: 16px;
+                font-size: 11px; color: #aaa; }
+    </style>
+</head>
+<body>
+    <nav>
+    <h1> AppUI</h1>
+    <button class="btn">Sign In</button>
+    </nav>
+    <div class="hero">
+    <h2>Built with React · Mobile First</h2>
+    <p>Single Page App — no page reloads, ever.</p>
+    </div>
+    <div class="cards">
+    <div class="card">
+        <h3>Components</h3>
+        <p>Reusable UI blocks built with React and props.</p>
+        <span class="chip">React</span>
+    </div>
+    <div class="card">
+        <h3>Responsive</h3>
+        <p>Flexbox and Grid adapt to any screen size.</p>
+        <span class="chip">CSS Grid</span>
+    </div>
+    <div class="card">
+        <h3>REST API</h3>
+        <p>JSON data fetched async — no server rendering.</p>
+        <span class="chip">Node.js</span>
+    </div>
+    </div>
+    <footer>Built with React · Vue · Angular · Node.js</footer>
+</body>
+</html>
+`,
+
+// ERA 5 — AI Web (2024 style)
+era5: `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>AI Assistant</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Segoe UI', sans-serif;
+            background: #0f0f13; color: #e0e0e0;
+            height: 100vh; display: flex;
+            flex-direction: column; }
+        header { padding: 14px 20px;
+                border-bottom: 1px solid #1e1e2e;
+                display: flex; align-items: center;
+                gap: 10px; background: #111118; }
+        header .dot { width: 10px; height: 10px;
+                    border-radius: 50%; background: #4ade80;
+                    box-shadow: 0 0 8px #4ade80; }
+        header span { font-size: 14px; font-weight: 600;
+                    color: #fff; }
+        header small { font-size: 11px; color: #555;
+                    margin-left: auto; }
+        .chat { flex: 1; overflow-y: auto;
+                padding: 20px; display: flex;
+                flex-direction: column; gap: 14px; }
+        .msg { max-width: 80%; padding: 12px 16px;
+            border-radius: 12px; font-size: 13px;
+            line-height: 1.6; }
+        .msg.user { background: #1a1a2e; color: #c8c8d8;
+                    align-self: flex-end;
+                    border: 1px solid #2a2a3e; }
+        .msg.ai { background: #0d1f0d; color: #4ade80;
+                align-self: flex-start;
+                border: 1px solid #1a3a1a; }
+        .msg.ai strong { color: #86efac; }
+        .input-row { padding: 14px 20px;
+                    border-top: 1px solid #1e1e2e;
+                    background: #111118;
+                    display: flex; gap: 10px; }
+        .input-row input { flex: 1; background: #1a1a2e;
+                        border: 1px solid #2a2a3e;
+                        color: #e0e0e0; padding: 10px 14px;
+                        border-radius: 8px; font-size: 13px;
+                        outline: none; }
+        .input-row button { background: #4ade80; color: #000;
+                            border: none; padding: 10px 18px;
+                            border-radius: 8px; font-size: 13px;
+                            font-weight: 600; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="dot"></div>
+        <span>Claude — AI Assistant</span>
+        <small>claude-sonnet-4-6 · online</small>
+    </header>
+    <div class="chat">
+    <div class="msg user">
+        How did the web evolve from 1991 to today?
+    </div>
+    <div class="msg ai">
+        <strong>Great question!</strong> The web went through
+        5 major eras:<br><br>
+        1. <strong>Web 1.0 (1991)</strong> — static HTML pages,
+        read-only<br>
+        2. <strong>Dot-com (1999)</strong> — Flash, GIFs,
+        chaos<br>
+        3. <strong>Web 2.0 (2004)</strong> — AJAX, social
+        media, UGC<br>
+        4. <strong>Mobile (2012)</strong> — React, SPAs,
+        responsive design<br>
+        5. <strong>AI Web (2020)</strong> — LLMs, generative
+        interfaces, this chat 
+    </div>
+    <div class="msg user">
+        What comes next?
+    </div>
+    <div class="msg ai">
+        The <strong>Post-Browser Web</strong> — spatial
+        computing, AR overlays, and AI that builds its own
+        interfaces on demand. The browser as we know it
+        may not survive.
+    </div>
+    </div>
+    <div class="input-row">
+    <input type="text"
+            placeholder="Ask me anything about the web...">
+    <button>Send</button>
+    </div>
+</body>
+</html>
+`
+};
+
+// Opens the live preview in a real new browser tab
+function openLivePreview(eraKey) {
+  var html    = livePreviews[eraKey]; // get the HTML string
+  var newTab  = window.open();        // open a blank new tab
+  newTab.document.open();             // open the document stream
+  newTab.document.write(html);        // write the HTML into it
+  newTab.document.close();            // close the stream = renders it
+}
+</script>
+
+</body>
+</html>
